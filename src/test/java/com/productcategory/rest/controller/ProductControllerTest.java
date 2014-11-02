@@ -2,7 +2,6 @@ package com.productcategory.rest.controller;
 
 import com.productcategory.rest.domain.Product;
 import com.productcategory.rest.service.ProductService;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,6 +13,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.productcategory.rest.domain.Product.Factory.createProduct;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
@@ -43,15 +43,5 @@ public class ProductControllerTest {
 
         verify(productService, times(1)).getProducts();
 
-    }
-
-    public Product createProduct(final int id, final String name, final BigDecimal price, final LocalDate date, final int categoryId){
-        return new Product(){{
-            setId(id);
-            setName(name);
-            setPrice(price);
-            setDate(date);
-            setCategoryId(categoryId);
-        }};
     }
 }

@@ -13,6 +13,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.productcategory.rest.domain.Product.Factory.createProduct;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -27,7 +28,6 @@ public class ProductServiceImplTest {
     @Mock private ProductRepository productRepository;
     private ProductService productService;
     private List<Product> products = new ArrayList<Product>();
-
 
     @Before
     public void setUp(){
@@ -45,15 +45,4 @@ public class ProductServiceImplTest {
 
         verify(productRepository, times(1)).findAll();
     }
-
-    public Product createProduct(final int id, final String name, final BigDecimal price, final LocalDate date, final int categoryId){
-        return new Product(){{
-            setId(id);
-            setName(name);
-            setPrice(price);
-            setDate(date);
-            setCategoryId(categoryId);
-        }};
-    }
-
 }

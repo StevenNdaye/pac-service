@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.inject.Inject;
-import java.util.List;
 
 /**
  * Created by steven on 2014/11/02.
@@ -23,7 +22,7 @@ public class ProductController {
     }
 
     @RequestMapping(value = "/products", method = RequestMethod.GET)
-    public List<Product> getProducts() {
+    public Iterable<Product> getProducts() {
         return productService.getProducts();
     }
 }

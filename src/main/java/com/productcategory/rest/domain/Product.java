@@ -2,7 +2,7 @@ package com.productcategory.rest.domain;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.sql.Timestamp;
 
 /**
  * Created by steven on 2014/11/02.
@@ -26,7 +26,7 @@ public class Product {
     private String desciption;
 
     @Column(name = "last_update")
-    private LocalDate date;
+    private Timestamp date;
 
     @Column(name = "category_id")
     private int categoryId;
@@ -55,11 +55,11 @@ public class Product {
         this.price = price;
     }
 
-    public LocalDate getDate() {
+    public Timestamp getDate() {
         return date;
     }
 
-    public void setDate(LocalDate date) {
+    public void setDate(Timestamp date) {
         this.date = date;
     }
 
@@ -81,7 +81,7 @@ public class Product {
 
     public static class Factory {
 
-        public static Product createProduct(final int id, final String name, final BigDecimal price, final LocalDate date, final int categoryId, final String description){
+        public static Product createProduct(final int id, final String name, final BigDecimal price, final Timestamp date, final int categoryId, final String description){
             return new Product(){{
                 setId(id);
                 setName(name);

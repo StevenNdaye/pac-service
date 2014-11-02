@@ -5,7 +5,6 @@ import com.productcategory.rest.repository.ProductRepository;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
-import java.util.List;
 
 /**
  * Created by steven on 2014/11/02.
@@ -21,7 +20,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> getProducts() {
-        return (List<Product>) productRepository.findAll();
+    public Iterable<Product> getProducts() {
+        return productRepository.findAll();
     }
 }

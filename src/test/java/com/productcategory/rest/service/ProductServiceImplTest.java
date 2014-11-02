@@ -9,7 +9,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,14 +32,16 @@ public class ProductServiceImplTest {
     @Before
     public void setUp(){
         productService = new ProductServiceImpl(productRepository);
-        products.add(createProduct(100, "First Product", BigDecimal.TEN, LocalDate.now(), 10, "description"));
-        products.add(createProduct(101, "SecondProduct", BigDecimal.ONE, LocalDate.now(), 11, "description"));
+        products.add(createProduct(100, "First Product", BigDecimal.TEN, new Timestamp(System.currentTimeMillis()),
+                10, "description"));
+        products.add(createProduct(101, "SecondProduct", BigDecimal.ONE, new Timestamp(System.currentTimeMillis()),
+                11, "description"));
     }
 
     @Test
     public void itShouldGetAllProductsFromRepository(){
         when(productRepository.findAll()).thenReturn(products);
-        List<Product> returnedProducts = productService.getProducts();
+        Iterable<Product> returnedProducts = productService.getProducts();
 
         assertEquals(products, returnedProducts);
 

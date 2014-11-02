@@ -30,8 +30,8 @@ public class ProductControllerTest {
     @Before
     public void setUp(){
         productController = new ProductController(productService);
-        products.add(createProduct(100, "First Product", BigDecimal.TEN, LocalDate.now(), 10));
-        products.add(createProduct(101, "SecondProduct", BigDecimal.ONE, LocalDate.now(), 11));
+        products.add(createProduct(100, "First Product", BigDecimal.TEN, LocalDate.now(), 10, "description"));
+        products.add(createProduct(101, "SecondProduct", BigDecimal.ONE, LocalDate.now(), 11, "description"));
     }
 
     @Test

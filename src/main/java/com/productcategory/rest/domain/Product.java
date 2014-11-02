@@ -1,17 +1,34 @@
 package com.productcategory.rest.domain;
 
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 /**
  * Created by steven on 2014/11/02.
  */
+@Entity
+@Table(name = "product")
 public class Product {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     private int id;
+
+    @Column(name = "name")
     private String name;
+
+    @Column(name = "price")
     private BigDecimal price;
+
+    @Column(name = "description")
+    private String desciption;
+
+    @Column(name = "last_update")
     private LocalDate date;
+
+    @Column(name = "category_id")
     private int categoryId;
 
     public int getId() {
@@ -54,13 +71,22 @@ public class Product {
         this.categoryId = categoryId;
     }
 
+    public String getDesciption() {
+        return desciption;
+    }
+
+    public void setDesciption(String desciption) {
+        this.desciption = desciption;
+    }
+
     public static class Factory {
 
-        public static Product createProduct(final int id, final String name, final BigDecimal price, final LocalDate date, final int categoryId){
+        public static Product createProduct(final int id, final String name, final BigDecimal price, final LocalDate date, final int categoryId, final String description){
             return new Product(){{
                 setId(id);
                 setName(name);
                 setPrice(price);
+                setDesciption(description);
                 setDate(date);
                 setCategoryId(categoryId);
             }};

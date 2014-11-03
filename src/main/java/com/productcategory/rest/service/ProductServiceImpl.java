@@ -1,6 +1,7 @@
 package com.productcategory.rest.service;
 
 import com.productcategory.rest.domain.Product;
+import com.productcategory.rest.exceptions.ProductNotFoundException;
 import com.productcategory.rest.repository.ProductRepository;
 import org.springframework.stereotype.Service;
 

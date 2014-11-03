@@ -8,12 +8,11 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import java.math.BigDecimal;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
 import static com.productcategory.rest.domain.Product.Factory.createProduct;
+import static com.productcategory.rest.helpers.SyntaxSugar.*;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
@@ -22,13 +21,6 @@ import static org.mockito.Mockito.*;
  */
 @RunWith(MockitoJUnitRunner.class)
 public class ProductControllerTest {
-
-    public static final int PRODUCT_ID = 100;
-    public static final String PRODUCT_NAME = "A product";
-    public static final BigDecimal PRODUCT_PRICE = BigDecimal.TEN;
-    public static final Timestamp PRODUCT_LAST_UPDATE = new Timestamp(System.currentTimeMillis());
-    public static final int PRODUCT_CATEGORY_ID = 10;
-    public static final String PRODUCT_DESCRIPTION = "A product description";
 
     @Mock private ProductService productService;
     private ProductController productController;

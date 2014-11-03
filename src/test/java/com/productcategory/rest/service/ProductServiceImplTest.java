@@ -8,8 +8,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import java.math.BigDecimal;
-import java.sql.Timestamp;
+import static com.productcategory.rest.helpers.SyntaxSugar.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,13 +23,6 @@ import static org.mockito.Mockito.when;
  */
 @RunWith(MockitoJUnitRunner.class)
 public class ProductServiceImplTest {
-
-    public static final int PRODUCT_ID = 100;
-    public static final String PRODUCT_NAME = "A product";
-    public static final BigDecimal PRODUCT_PRICE = BigDecimal.TEN;
-    public static final Timestamp PRODUCT_LAST_UPDATE = new Timestamp(System.currentTimeMillis());
-    public static final int PRODUCT_CATEGORY_ID = 10;
-    public static final String PRODUCT_DESCRIPTION = "A product description";
 
     @Mock private ProductRepository productRepository;
     private ProductService productService;

@@ -91,4 +91,11 @@ public class ProductControllerTest {
         verify(productService, times(1)).deleteProduct(PRODUCT_ID);
     }
 
+    @Test
+    public void itShouldUpdateProductWhenGivenItsId(){
+        when(productService.updateProduct(PRODUCT_ID, product)).thenReturn(product);
+        Product updatedProduct = productController.updateProduct(PRODUCT_ID, product);
+        assertEquals(product, updatedProduct);
+        verify(productService, times(1)).updateProduct(PRODUCT_ID, product);
+    }
 }

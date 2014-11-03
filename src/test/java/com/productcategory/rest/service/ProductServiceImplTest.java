@@ -84,4 +84,13 @@ public class ProductServiceImplTest {
         assertEquals(INVALID_PRODUCT_MESSAGE, message);
         verify(productRepository, times(0)).delete(PRODUCT_ID);
     }
+
+    @Test
+    public void itShouldUpdateProductWhenGivenItsId(){
+        when(productRepository.findOne(PRODUCT_ID)).thenReturn(product);
+        when(productRepository.save(product)).thenReturn(product);
+        Product updatedProduct = productService.updateProduct(PRODUCT_ID, product);
+        assertEquals(product, updatedProduct);
+        verify(productRepository, times(1)).save(updatedProduct);
+    }
 }

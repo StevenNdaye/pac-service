@@ -40,4 +40,9 @@ public class ProductController {
     public String deleteProduct(@PathVariable int productId) {
         return productService.deleteProduct(productId);
     }
+
+    @RequestMapping(value = "/products/{productId}", method = RequestMethod.PUT)
+    public Product updateProduct(@PathVariable int productId, @RequestBody @Valid Product product) {
+        return productService.updateProduct(productId, product);
+    }
 }

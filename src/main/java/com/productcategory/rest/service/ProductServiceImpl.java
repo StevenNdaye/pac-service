@@ -6,6 +6,9 @@ import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
 
+import java.math.BigDecimal;
+import java.sql.Timestamp;
+
 import static java.util.Objects.isNull;
 
 /**
@@ -49,5 +52,40 @@ public class ProductServiceImpl implements ProductService {
             return PRODUCT_DELETED_MESSAGE;
         }
         return INVALID_PRODUCT_MESSAGE;
+    }
+
+    @Override
+    public Product updateProduct(int productId, Product product) {
+        Product existingProduct = productRepository.findOne(productId);
+        if(isNull(existingProduct)){
+            return saveProduct(product);
+        }
+        return updateExistingProduct(product, existingProduct);
+    }
+
+    private Product updateExistingProduct(Product product, Product existingProduct) {
+        existingProduct.setName(ifNotNull(product.getName(), existingProduct.getName()));
+        existingProduct.setPrice(ifNotNull(product.getPrice(), existingProduct.getPrice()));
+        existingProduct.setDescription(ifNotNull(product.getDescription(), existingProduct.getDescription()));
+        existingProduct.setDate(ifNotNull(product.getDate(), existingProduct.getDate()));
+        existingProduct.setCategoryId(ifNotNull(product.getCategoryId(), existingProduct.getCategoryId()));
+
+        return productRepository.save(existingProduct);
+    }
+
+    private int ifNotNull(int data, int existingData) {
+        return data == 0 ? existingData : data;
+    }
+
+    private Timestamp ifNotNull(Timestamp data, Timestamp existingData) {
+        return data.equals(null) ? existingData : data;
+    }
+
+    private BigDecimal ifNotNull(BigDecimal data, BigDecimal existingData) {
+        return data.equals(null) ? existingData : data;
+    }
+
+    private String ifNotNull(String data, String existingData) {
+        return data.equals(null) ? existingData : data;
     }
 }

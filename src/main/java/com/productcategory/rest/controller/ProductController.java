@@ -2,6 +2,7 @@ package com.productcategory.rest.controller;
 
 import com.productcategory.rest.domain.Product;
 import com.productcategory.rest.service.ProductService;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,5 +25,10 @@ public class ProductController {
     @RequestMapping(value = "/products", method = RequestMethod.GET)
     public Iterable<Product> getProducts() {
         return productService.getProducts();
+    }
+
+    @RequestMapping(value = "/products/{productId}", method = RequestMethod.GET)
+    public Product getProduct(@PathVariable int productId) {
+        return productService.getProduct(productId);
     }
 }

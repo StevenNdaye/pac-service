@@ -7,4 +7,6 @@ import com.productcategory.rest.domain.Product;
  */
 public interface ProductService {
     Iterable<Product> getProducts();
+
+    Product getProduct(int productId);
 }

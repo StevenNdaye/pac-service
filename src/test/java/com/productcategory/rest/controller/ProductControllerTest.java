@@ -23,17 +23,23 @@ import static org.mockito.Mockito.*;
 @RunWith(MockitoJUnitRunner.class)
 public class ProductControllerTest {
 
+    public static final int PRODUCT_ID = 100;
+    public static final String PRODUCT_NAME = "A product";
+    public static final BigDecimal PRODUCT_PRICE = BigDecimal.TEN;
+    public static final Timestamp PRODUCT_LAST_UPDATE = new Timestamp(System.currentTimeMillis());
+    public static final int PRODUCT_CATEGORY_ID = 10;
+    public static final String PRODUCT_DESCRIPTION = "A product description";
+
     @Mock private ProductService productService;
     private ProductController productController;
     private List<Product> products = new ArrayList<Product>();
+    private Product product;
 
     @Before
     public void setUp(){
         productController = new ProductController(productService);
-        products.add(createProduct(100, "First Product", BigDecimal.TEN, new Timestamp(System.currentTimeMillis()),
-                10, "description"));
-        products.add(createProduct(101, "SecondProduct", BigDecimal.ONE, new Timestamp(System.currentTimeMillis()),
-                11, "description"));
+        product = createProduct(PRODUCT_ID, PRODUCT_NAME, PRODUCT_PRICE, PRODUCT_LAST_UPDATE, PRODUCT_CATEGORY_ID, PRODUCT_DESCRIPTION);
+        products.add(product);
     }
 
     @Test
@@ -42,8 +48,15 @@ public class ProductControllerTest {
         Iterable<Product> returnedProducts = productController.getProducts();
 
         assertEquals(products, returnedProducts);
-
         verify(productService, times(1)).getProducts();
+    }
 
+    @Test
+    public void itShouldGetAProductFromService(){
+        when(productService.getProduct(any(Integer.class))).thenReturn(product);
+        Product returnedProduct = productController.getProduct(PRODUCT_ID);
+
+        assertEquals(product, returnedProduct);
+        verify(productService, times(1)).getProduct(PRODUCT_ID);
     }
 }

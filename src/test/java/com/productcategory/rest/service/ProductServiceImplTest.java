@@ -32,7 +32,8 @@ public class ProductServiceImplTest {
     @Before
     public void setUp(){
         productService = new ProductServiceImpl(productRepository);
-        product = createProduct(PRODUCT_ID, PRODUCT_NAME, PRODUCT_PRICE, PRODUCT_LAST_UPDATE, PRODUCT_CATEGORY_ID, PRODUCT_DESCRIPTION);
+        product = createProduct(PRODUCT_ID, PRODUCT_NAME, PRODUCT_PRICE, PRODUCT_LAST_UPDATE, PRODUCT_CATEGORY_ID,
+                PRODUCT_DESCRIPTION);
         products.add(product);
     }
 
@@ -40,7 +41,6 @@ public class ProductServiceImplTest {
     public void itShouldGetAllProductsFromRepository(){
         when(productRepository.findAll()).thenReturn(products);
         Iterable<Product> returnedProducts = productService.getProducts();
-
         assertEquals(products, returnedProducts);
         verify(productRepository, times(1)).findAll();
     }
@@ -49,7 +49,6 @@ public class ProductServiceImplTest {
     public void itShouldGetAProductFromRepository(){
         when(productRepository.findOne(PRODUCT_ID)).thenReturn(product);
         Product returnedProduct = productService.getProduct(PRODUCT_ID);
-
         assertEquals(product, returnedProduct);
         verify(productRepository, times(1)).findOne(PRODUCT_ID);
     }
@@ -65,10 +64,24 @@ public class ProductServiceImplTest {
     public void itShouldSaveProductIfNotExisting(){
         when(productRepository.findByName(product.getName())).thenReturn(null);
         when(productRepository.save(product)).thenReturn(product);
-
         Product returnedProduct = productService.saveProduct(product);
         assertEquals(product, returnedProduct);
-
         verify(productRepository, times(1)).save(product);
+    }
+
+    @Test
+    public void itShouldDeleteAProductWhenGivenItsId(){
+        when(productRepository.exists(PRODUCT_ID)).thenReturn(true);
+        String message = productService.deleteProduct(PRODUCT_ID);
+        assertEquals(PRODUCT_DELETED_MESSAGE, message);
+        verify(productRepository, times(1)).delete(PRODUCT_ID);
+    }
+
+    @Test
+    public void itShouldNotDeleteAProductIfNotExisting(){
+        when(productRepository.exists(PRODUCT_ID)).thenReturn(false);
+        String message = productService.deleteProduct(PRODUCT_ID);
+        assertEquals(INVALID_PRODUCT_MESSAGE, message);
+        verify(productRepository, times(0)).delete(PRODUCT_ID);
     }
 }

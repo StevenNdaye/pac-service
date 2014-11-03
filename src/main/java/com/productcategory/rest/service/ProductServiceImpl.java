@@ -14,6 +14,8 @@ import static java.util.Objects.isNull;
 @Service
 public class ProductServiceImpl implements ProductService {
 
+    public static final String PRODUCT_DELETED_MESSAGE = "Product Deleted!";
+    public static final String INVALID_PRODUCT_MESSAGE = "Invalid Product!";
     private final ProductRepository productRepository;
 
     @Inject
@@ -38,5 +40,14 @@ public class ProductServiceImpl implements ProductService {
             return productRepository.save(product);
         }
         return returnedProduct;
+    }
+
+    @Override
+    public String deleteProduct(int productId) {
+        if(productRepository.exists(productId)){
+            productRepository.delete(productId);
+            return PRODUCT_DELETED_MESSAGE;
+        }
+        return INVALID_PRODUCT_MESSAGE;
     }
 }

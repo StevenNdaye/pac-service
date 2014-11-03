@@ -37,11 +37,10 @@ public class ProductControllerTest {
     @Before
     public void setUp(){
         MockitoAnnotations.initMocks(this);
-
         productController = new ProductController(productService);
-        product = createProduct(PRODUCT_ID, PRODUCT_NAME, PRODUCT_PRICE, PRODUCT_LAST_UPDATE, PRODUCT_CATEGORY_ID, PRODUCT_DESCRIPTION);
+        product = createProduct(PRODUCT_ID, PRODUCT_NAME, PRODUCT_PRICE, PRODUCT_LAST_UPDATE, PRODUCT_CATEGORY_ID,
+                PRODUCT_DESCRIPTION);
         products.add(product);
-
         this.mockMvc = MockMvcBuilders.standaloneSetup(productController).build();
     }
 
@@ -49,7 +48,6 @@ public class ProductControllerTest {
     public void itShouldGetAllProductsFromService(){
         when(productService.getProducts()).thenReturn(products);
         Iterable<Product> returnedProducts = productController.getProducts();
-
         assertEquals(products, returnedProducts);
         verify(productService, times(1)).getProducts();
     }
@@ -58,7 +56,6 @@ public class ProductControllerTest {
     public void itShouldGetAProductFromService() throws ProductNotFoundException {
         when(productService.getProduct(any(Integer.class))).thenReturn(product);
         Product returnedProduct = productController.getProduct(PRODUCT_ID);
-
         assertEquals(product, returnedProduct);
         verify(productService, times(1)).getProduct(PRODUCT_ID);
     }
@@ -77,4 +74,21 @@ public class ProductControllerTest {
         assertEquals(product, returnedProduct);
         verify(productService, times(1)).saveProduct(product);
     }
+
+    @Test
+    public void itShouldDeleteAProductGivenItsId(){
+        when(productService.deleteProduct(PRODUCT_ID)).thenReturn(PRODUCT_DELETED_MESSAGE);
+        String message = productController.deleteProduct(PRODUCT_ID);
+        assertEquals(PRODUCT_DELETED_MESSAGE, message);
+        verify(productService, times(1)).deleteProduct(PRODUCT_ID);
+    }
+
+    @Test
+    public void itShouldNotDeleteAProductGivenItsId(){
+        when(productService.deleteProduct(PRODUCT_ID)).thenReturn(INVALID_PRODUCT_MESSAGE);
+        String message = productController.deleteProduct(PRODUCT_ID);
+        assertEquals(INVALID_PRODUCT_MESSAGE, message);
+        verify(productService, times(1)).deleteProduct(PRODUCT_ID);
+    }
+
 }

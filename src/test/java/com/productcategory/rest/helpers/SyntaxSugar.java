@@ -13,4 +13,6 @@ public class SyntaxSugar {
     public static final Timestamp PRODUCT_LAST_UPDATE = new Timestamp(System.currentTimeMillis());
     public static final int PRODUCT_CATEGORY_ID = 10;
     public static final String PRODUCT_DESCRIPTION = "A product description";
+    public static final String PRODUCT_DELETED_MESSAGE = "Product Deleted!";
+    public static final String INVALID_PRODUCT_MESSAGE = "Invalid Product!";
 }

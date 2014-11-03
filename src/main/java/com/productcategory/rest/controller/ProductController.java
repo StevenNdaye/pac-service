@@ -33,7 +33,11 @@ public class ProductController {
 
     @RequestMapping(value = "/products", method = RequestMethod.POST)
     public Product saveProduct(@RequestBody @Valid Product product) {
-        Product returnedProduct = productService.saveProduct(product);
-        return returnedProduct;
+        return productService.saveProduct(product);
+    }
+
+    @RequestMapping(value = "/products/{productId}", method = RequestMethod.DELETE)
+    public String deleteProduct(@PathVariable int productId) {
+        return productService.deleteProduct(productId);
     }
 }

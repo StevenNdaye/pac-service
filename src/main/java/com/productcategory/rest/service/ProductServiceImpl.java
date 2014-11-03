@@ -1,11 +1,12 @@
 package com.productcategory.rest.service;
 
 import com.productcategory.rest.domain.Product;
-import com.productcategory.rest.exceptions.ProductNotFoundException;
 import com.productcategory.rest.repository.ProductRepository;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
+
+import static java.util.Objects.isNull;
 
 /**
  * Created by steven on 2014/11/02.
@@ -28,5 +29,14 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Product getProduct(int productId) {
         return productRepository.findOne(productId);
+    }
+
+    @Override
+    public Product saveProduct(Product product) {
+        Product returnedProduct = productRepository.findByName(product.getName());
+        if(isNull(returnedProduct)){
+            return productRepository.save(product);
+        }
+        return returnedProduct;
     }
 }

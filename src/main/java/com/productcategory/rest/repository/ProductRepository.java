@@ -7,4 +7,5 @@ import org.springframework.data.repository.CrudRepository;
  * Created by steven on 2014/11/02.
  */
 public interface ProductRepository  extends CrudRepository<Product, Integer>{
+    Product findByName(String name);
 }

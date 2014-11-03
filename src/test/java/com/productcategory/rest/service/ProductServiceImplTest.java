@@ -53,4 +53,22 @@ public class ProductServiceImplTest {
         assertEquals(product, returnedProduct);
         verify(productRepository, times(1)).findOne(PRODUCT_ID);
     }
+
+    @Test
+    public void itShouldNotSaveWhenIfExists(){
+        when(productRepository.findByName(product.getName())).thenReturn(product);
+        productService.saveProduct(product);
+        verify(productRepository, times(0)).save(product);
+    }
+
+    @Test
+    public void itShouldSaveProductIfNotExisting(){
+        when(productRepository.findByName(product.getName())).thenReturn(null);
+        when(productRepository.save(product)).thenReturn(product);
+
+        Product returnedProduct = productService.saveProduct(product);
+        assertEquals(product, returnedProduct);
+
+        verify(productRepository, times(1)).save(product);
+    }
 }

@@ -23,7 +23,7 @@ public class Product {
     private BigDecimal price;
 
     @Column(name = "description")
-    private String desciption;
+    private String description;
 
     @Column(name = "last_update")
     private Timestamp date;
@@ -71,12 +71,12 @@ public class Product {
         this.categoryId = categoryId;
     }
 
-    public String getDesciption() {
-        return desciption;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDesciption(String desciption) {
-        this.desciption = desciption;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public static class Factory {
@@ -86,7 +86,7 @@ public class Product {
                 setId(id);
                 setName(name);
                 setPrice(price);
-                setDesciption(description);
+                setDescription(description);
                 setDate(date);
                 setCategoryId(categoryId);
             }};

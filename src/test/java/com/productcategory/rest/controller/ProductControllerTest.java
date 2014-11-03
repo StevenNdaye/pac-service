@@ -69,4 +69,12 @@ public class ProductControllerTest {
         mockMvc.perform(get("/products/{productId}", PRODUCT_ID)).andExpect(status().isNotFound());
         verify(productService, times(1)).getProduct(PRODUCT_ID);
     }
+
+    @Test
+    public void itShouldSaveProduct() throws Exception {
+        when(productService.saveProduct(product)).thenReturn(product);
+        Product returnedProduct = productController.saveProduct(product);
+        assertEquals(product, returnedProduct);
+        verify(productService, times(1)).saveProduct(product);
+    }
 }

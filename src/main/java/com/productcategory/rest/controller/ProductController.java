@@ -6,6 +6,7 @@ import com.productcategory.rest.service.ProductService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
+import javax.validation.Valid;
 
 /**
  * Created by steven on 2014/11/02.
@@ -28,5 +29,11 @@ public class ProductController {
     @RequestMapping(value = "/products/{productId}", method = RequestMethod.GET)
     public Product getProduct(@PathVariable int productId) throws ProductNotFoundException {
         return this.productService.getProduct(productId);
+    }
+
+    @RequestMapping(value = "/products", method = RequestMethod.POST)
+    public Product saveProduct(@RequestBody @Valid Product product) {
+        Product returnedProduct = productService.saveProduct(product);
+        return returnedProduct;
     }
 }

@@ -9,4 +9,6 @@ public interface ProductService {
     Iterable<Product> getProducts();
 
     Product getProduct(int productId);
+
+    Product saveProduct(Product product);
 }

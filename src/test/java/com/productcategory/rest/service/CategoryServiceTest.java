@@ -52,4 +52,47 @@ public class CategoryServiceTest {
         assertEquals(category, returnedCategory);
         verify(categoryRepository, times(1)).findOne(CATEGORY_ID);
     }
+
+    @Test
+    public void itShouldSaveCategoryIfNotExists(){
+        when(categoryRepository.findByName(category.getName())).thenReturn(null);
+        when(categoryRepository.save(category)).thenReturn(category);
+        Category returnedCategory = categoryService.saveCategory(category);
+        assertEquals(category, returnedCategory);
+        verify(categoryRepository, times(1)).findByName(category.getName());
+        verify(categoryRepository, times(1)).save(category);
+    }
+
+    @Test
+    public void itShouldNotSaveCategoryWhenItExists(){
+        when(categoryRepository.findByName(category.getName())).thenReturn(category);
+        categoryService.saveCategory(category);
+        verify(categoryRepository, times(1)).findByName(category.getName());
+        verify(categoryRepository, times(0)).save(category);
+    }
+
+    @Test
+    public void itShouldDeleteAProductWhenGivenItsId(){
+        when(categoryRepository.exists(CATEGORY_ID)).thenReturn(true);
+        String message = categoryService.deleteCategory(CATEGORY_ID);
+        assertEquals(CATEGORY_DELETED_MESSAGE, message);
+        verify(categoryRepository, times(1)).delete(CATEGORY_ID);
+    }
+
+    @Test
+    public void itShouldNotDeleteAProductIfNotExisting(){
+        when(categoryRepository.exists(CATEGORY_ID)).thenReturn(false);
+        String message = categoryService.deleteCategory(CATEGORY_ID);
+        assertEquals(INVALID_CATEGORY_MESSAGE, message);
+        verify(categoryRepository, times(0)).delete(CATEGORY_ID);
+    }
+
+    @Test
+    public void itShouldUpdateProductWhenGivenItsId(){
+        when(categoryRepository.findOne(CATEGORY_ID)).thenReturn(category);
+        when(categoryRepository.save(category)).thenReturn(category);
+        Category updatedCategory = categoryService.updateCategory(CATEGORY_ID, category);
+        assertEquals(category, updatedCategory);
+        verify(categoryRepository, times(1)).save(updatedCategory);
+    }
 }

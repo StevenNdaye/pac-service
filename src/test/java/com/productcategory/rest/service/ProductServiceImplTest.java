@@ -54,9 +54,10 @@ public class ProductServiceImplTest {
     }
 
     @Test
-    public void itShouldNotSaveWhenIfExists(){
+    public void itShouldNotSaveProductWhenItExists(){
         when(productRepository.findByName(product.getName())).thenReturn(product);
         productService.saveProduct(product);
+        verify(productRepository, times(1)).findByName(product.getName());
         verify(productRepository, times(0)).save(product);
     }
 
@@ -66,6 +67,7 @@ public class ProductServiceImplTest {
         when(productRepository.save(product)).thenReturn(product);
         Product returnedProduct = productService.saveProduct(product);
         assertEquals(product, returnedProduct);
+        verify(productRepository, times(1)).findByName(product.getName());
         verify(productRepository, times(1)).save(product);
     }
 

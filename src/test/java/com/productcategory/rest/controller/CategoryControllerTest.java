@@ -29,7 +29,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(MockitoJUnitRunner.class)
 public class CategoryControllerTest {
 
-
     @Mock private CategoryService categoryService;
     private CategoryController categoryController;
     private List<Category> categories = new ArrayList<Category>();
@@ -66,6 +65,38 @@ public class CategoryControllerTest {
         when(categoryService.getCategory(CATEGORY_ID)).thenThrow(new CategoryNotFoundException(CATEGORY_ID));
         mockMvc.perform(get("/categories/{categoryId}", CATEGORY_ID)).andExpect(status().isNotFound());
         verify(categoryService, times(1)).getCategory(CATEGORY_ID);
+    }
+
+    @Test
+    public void itShouldSaveCategory(){
+        when(categoryService.saveCategory(category)).thenReturn(category);
+        Category returnedCategory = categoryController.saveCategory(category);
+        assertEquals(category, returnedCategory);
+        verify(categoryService, times(1)).saveCategory(category);
+    }
+
+    @Test
+    public void itShouldDeleteAProductGivenItsId(){
+        when(categoryService.deleteCategory(CATEGORY_ID)).thenReturn(CATEGORY_DELETED_MESSAGE);
+        String message = categoryController.deleteCategory(CATEGORY_ID);
+        assertEquals(CATEGORY_DELETED_MESSAGE, message);
+        verify(categoryService, times(1)).deleteCategory(CATEGORY_ID);
+    }
+
+    @Test
+    public void itShouldNotDeleteAProductGivenItsId(){
+        when(categoryService.deleteCategory(CATEGORY_ID)).thenReturn(INVALID_CATEGORY_MESSAGE);
+        String message = categoryController.deleteCategory(CATEGORY_ID);
+        assertEquals(INVALID_CATEGORY_MESSAGE, message);
+        verify(categoryService, times(1)).deleteCategory(CATEGORY_ID);
+    }
+
+    @Test
+    public void itShouldUpdateProductWhenGivenItsId(){
+        when(categoryService.updateCategory(CATEGORY_ID, category)).thenReturn(category);
+        Category updatedCategory = categoryController.updateCategory(CATEGORY_ID, category);
+        assertEquals(category, updatedCategory);
+        verify(categoryService, times(1)).updateCategory(CATEGORY_ID, category);
     }
 
 }

@@ -9,4 +9,11 @@ public interface CategoryService {
     Iterable<Category> getCategories();
 
     Category getCategory(int categoryId);
+
+    Category saveCategory(Category category);
+
+    String deleteCategory(int categoryId);
+
+    Category updateCategory(int categoryId, Category category);
+
 }

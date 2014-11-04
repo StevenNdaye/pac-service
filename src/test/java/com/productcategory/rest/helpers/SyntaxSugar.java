@@ -15,4 +15,6 @@ public class SyntaxSugar {
     public static final String PRODUCT_DESCRIPTION = "A product description";
     public static final String PRODUCT_DELETED_MESSAGE = "Product Deleted!";
     public static final String INVALID_PRODUCT_MESSAGE = "Invalid Product!";
+    public static final String CATEGORY_NAME = "name";
+    public static final int CATEGORY_ID = 1000;
 }

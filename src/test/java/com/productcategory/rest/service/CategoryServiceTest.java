@@ -37,12 +37,19 @@ public class CategoryServiceTest {
         categories.add(category);
     }
 
-
     @Test
     public void itShouldGetAllCategoriesFromRepository(){
         when(categoryRepository.findAll()).thenReturn(categories);
         Iterable<Category> returnedCategories = categoryService.getCategories();
         assertEquals(categories, returnedCategories);
         verify(categoryRepository, times(1)).findAll();
+    }
+
+    @Test
+    public void itShouldGetACategoryFromRepository(){
+        when(categoryRepository.findOne(CATEGORY_ID)).thenReturn(category);
+        Category returnedCategory = categoryService.getCategory(CATEGORY_ID);
+        assertEquals(category, returnedCategory);
+        verify(categoryRepository, times(1)).findOne(CATEGORY_ID);
     }
 }

@@ -7,4 +7,6 @@ import com.productcategory.rest.domain.Category;
  */
 public interface CategoryService {
     Iterable<Category> getCategories();
+
+    Category getCategory(int categoryId);
 }

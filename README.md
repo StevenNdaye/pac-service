@@ -19,3 +19,5 @@ mvn package
 ```
 mvn spring-boot:run
 ```
+
+NB: You will realise that the database used is from the Netbeans E-commerce project.

@@ -95,4 +95,17 @@ public class CategoryServiceTest {
         assertEquals(category, updatedCategory);
         verify(categoryRepository, times(1)).save(updatedCategory);
     }
+
+    @Test
+    public void itShouldNotUpdateNameWhenGivenNameIsNull() {
+        Category expectedCategory = Category.Factory.createCategory(CATEGORY_ID, "James");
+        Category someCategory = Category.Factory.createCategory(CATEGORY_ID, null);
+
+        when(categoryRepository.findOne(CATEGORY_ID)).thenReturn(expectedCategory);
+        when(categoryRepository.save(expectedCategory)).thenReturn(expectedCategory);
+
+        Category updatedCategory = categoryService.updateCategory(CATEGORY_ID, someCategory);
+
+        assertEquals(updatedCategory.getName(), "James");
+    }
 }

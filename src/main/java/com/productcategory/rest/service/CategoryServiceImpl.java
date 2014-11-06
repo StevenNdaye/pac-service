@@ -7,11 +7,9 @@ import org.springframework.stereotype.Service;
 import javax.inject.Inject;
 import java.util.Objects;
 
+import static com.productcategory.rest.util.Utils.ifNotNull;
 import static java.util.Objects.isNull;
 
-/**
- * Created by steven on 2014/11/04.
- */
 @Service
 public class CategoryServiceImpl implements CategoryService {
 
@@ -64,9 +62,5 @@ public class CategoryServiceImpl implements CategoryService {
     private Category updateExistingCategory(Category category, Category existingCategory) {
         existingCategory.setName(ifNotNull(category.getName(), existingCategory.getName()));
         return categoryRepository.save(existingCategory);
-    }
-
-    private String ifNotNull(String name, String existingCategoryName) {
-        return name.equals(null) ? existingCategoryName : name;
     }
 }

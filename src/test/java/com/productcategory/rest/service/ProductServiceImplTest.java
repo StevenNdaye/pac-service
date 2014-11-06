@@ -1,5 +1,6 @@
 package com.productcategory.rest.service;
 
+import com.productcategory.rest.domain.Category;
 import com.productcategory.rest.domain.Product;
 import com.productcategory.rest.repository.ProductRepository;
 import org.junit.Before;
@@ -9,6 +10,9 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import static com.productcategory.rest.helpers.SyntaxSugar.*;
+
+import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -94,5 +98,58 @@ public class ProductServiceImplTest {
         Product updatedProduct = productService.updateProduct(PRODUCT_ID, product);
         assertEquals(product, updatedProduct);
         verify(productRepository, times(1)).save(updatedProduct);
+    }
+
+    @Test
+    public void itShouldNotUpdateNameWhenGivenNameIsNull() {
+        Product expectedProduct = Product.Factory.createProduct(PRODUCT_ID, "Jim", BigDecimal.ONE, new Timestamp(1415224029L), 1,"someDescription");
+        Product someProduct = Product.Factory.createProduct(PRODUCT_ID, null, BigDecimal.ONE, new Timestamp(1415224029L), 1,"someDescription");
+
+        when(productRepository.findOne(PRODUCT_ID)).thenReturn(expectedProduct);
+        when(productRepository.save(expectedProduct)).thenReturn(expectedProduct);
+
+        Product updatedProduct = productService.updateProduct(PRODUCT_ID, someProduct);
+
+        assertEquals(updatedProduct.getName(), "Jim");
+    }
+
+    @Test
+    public void itShouldNotUpdateDescriptionWhenGivenDescriptionIsNull() {
+        Product expectedProduct = Product.Factory.createProduct(PRODUCT_ID, "Jim", BigDecimal.ONE, new Timestamp(1415224029L), 1,"someDescription");
+        Product someProduct = Product.Factory.createProduct(PRODUCT_ID, "James", BigDecimal.ONE, new Timestamp(1415224029L), 1, null);
+
+        when(productRepository.findOne(PRODUCT_ID)).thenReturn(expectedProduct);
+        when(productRepository.save(expectedProduct)).thenReturn(expectedProduct);
+
+        Product updatedProduct = productService.updateProduct(PRODUCT_ID, someProduct);
+
+        assertEquals(updatedProduct.getDescription(), "someDescription");
+    }
+
+    @Test
+    public void itShouldNotUpdatePriceWhenGivenPriceIsNull() {
+        Product expectedProduct = Product.Factory.createProduct(PRODUCT_ID, "Jim", BigDecimal.ONE, new Timestamp(1415224029L), 1,"someDescription");
+        Product someProduct = Product.Factory.createProduct(PRODUCT_ID, "James", null, new Timestamp(1415224029L), 1, "someDescription");
+
+        when(productRepository.findOne(PRODUCT_ID)).thenReturn(expectedProduct);
+        when(productRepository.save(expectedProduct)).thenReturn(expectedProduct);
+
+        Product updatedProduct = productService.updateProduct(PRODUCT_ID, someProduct);
+
+        assertEquals(updatedProduct.getPrice(), BigDecimal.ONE);
+    }
+
+    @Test
+    public void itShouldNotUpdateDateWhenGivenDateIsNull() {
+        Timestamp timestamp = new Timestamp(1415224029L);
+        Product expectedProduct = Product.Factory.createProduct(PRODUCT_ID, "Jim", BigDecimal.ONE, timestamp, 1,"someDescription");
+        Product someProduct = Product.Factory.createProduct(PRODUCT_ID, "James", BigDecimal.ONE, null, 1, "someDescription");
+
+        when(productRepository.findOne(PRODUCT_ID)).thenReturn(expectedProduct);
+        when(productRepository.save(expectedProduct)).thenReturn(expectedProduct);
+
+        Product updatedProduct = productService.updateProduct(PRODUCT_ID, someProduct);
+
+        assertEquals(updatedProduct.getDate(), timestamp);
     }
 }

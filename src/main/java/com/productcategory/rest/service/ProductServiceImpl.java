@@ -78,14 +78,14 @@ public class ProductServiceImpl implements ProductService {
     }
 
     private Timestamp ifNotNull(Timestamp data, Timestamp existingData) {
-        return data.equals(null) ? existingData : data;
+        return data == null ? existingData : data;
     }
 
     private BigDecimal ifNotNull(BigDecimal data, BigDecimal existingData) {
-        return data.equals(null) ? existingData : data;
+        return data == null ? existingData : data;
     }
 
     private String ifNotNull(String data, String existingData) {
-        return data.equals(null) ? existingData : data;
+        return data == null ? existingData : data;
     }
 }

@@ -67,6 +67,6 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     private String ifNotNull(String name, String existingCategoryName) {
-        return name.equals(null) ? existingCategoryName : name;
+        return name == null ? existingCategoryName : name;
     }
 }

@@ -6,14 +6,9 @@ import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
 
-import java.math.BigDecimal;
-import java.sql.Timestamp;
-
 import static java.util.Objects.isNull;
+import static com.productcategory.rest.util.Utils.ifNotNull;
 
-/**
- * Created by steven on 2014/11/02.
- */
 @Service
 public class ProductServiceImpl implements ProductService {
 
@@ -71,21 +66,5 @@ public class ProductServiceImpl implements ProductService {
         existingProduct.setCategoryId(ifNotNull(product.getCategoryId(), existingProduct.getCategoryId()));
 
         return productRepository.save(existingProduct);
-    }
-
-    private int ifNotNull(int data, int existingData) {
-        return data == 0 ? existingData : data;
-    }
-
-    private Timestamp ifNotNull(Timestamp data, Timestamp existingData) {
-        return data == null ? existingData : data;
-    }
-
-    private BigDecimal ifNotNull(BigDecimal data, BigDecimal existingData) {
-        return data == null ? existingData : data;
-    }
-
-    private String ifNotNull(String data, String existingData) {
-        return data == null ? existingData : data;
     }
 }

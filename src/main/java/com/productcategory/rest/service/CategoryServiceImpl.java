@@ -35,7 +35,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public Category saveCategory(Category category) {
         Category returnedCategory = categoryRepository.findByName(category.getName());
-        if(Objects.isNull(returnedCategory)){
+        if (Objects.isNull(returnedCategory)) {
             return categoryRepository.save(category);
         }
         return returnedCategory;
@@ -43,7 +43,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public String deleteCategory(int categoryId) {
-        if(categoryRepository.exists(categoryId)){
+        if (categoryRepository.exists(categoryId)) {
             categoryRepository.delete(categoryId);
             return CATEGORY_DELETED_MESSAGE;
         }
@@ -53,7 +53,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public Category updateCategory(int categoryId, Category category) {
         Category existingCategory = categoryRepository.findOne(categoryId);
-        if(isNull(existingCategory)){
+        if (isNull(existingCategory)) {
             return saveCategory(category);
         }
         return updateExistingCategory(category, existingCategory);

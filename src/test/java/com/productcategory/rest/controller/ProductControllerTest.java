@@ -15,10 +15,19 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.productcategory.rest.domain.Product.Factory.createProduct;
-import static com.productcategory.rest.helpers.SyntaxSugar.*;
+import static com.productcategory.rest.helpers.SyntaxSugar.INVALID_PRODUCT_MESSAGE;
+import static com.productcategory.rest.helpers.SyntaxSugar.PRODUCT_CATEGORY_ID;
+import static com.productcategory.rest.helpers.SyntaxSugar.PRODUCT_DELETED_MESSAGE;
+import static com.productcategory.rest.helpers.SyntaxSugar.PRODUCT_DESCRIPTION;
+import static com.productcategory.rest.helpers.SyntaxSugar.PRODUCT_ID;
+import static com.productcategory.rest.helpers.SyntaxSugar.PRODUCT_LAST_UPDATE;
+import static com.productcategory.rest.helpers.SyntaxSugar.PRODUCT_NAME;
+import static com.productcategory.rest.helpers.SyntaxSugar.PRODUCT_PRICE;
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -28,24 +37,24 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(MockitoJUnitRunner.class)
 public class ProductControllerTest {
 
-    @Mock private ProductService productService;
+    @Mock
+    private ProductService productService;
     private ProductController productController;
     private List<Product> products = new ArrayList<Product>();
     private Product product;
     private MockMvc mockMvc;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         MockitoAnnotations.initMocks(this);
         productController = new ProductController(productService);
-        product = createProduct(PRODUCT_ID, PRODUCT_NAME, PRODUCT_PRICE, PRODUCT_LAST_UPDATE, PRODUCT_CATEGORY_ID,
-                PRODUCT_DESCRIPTION);
+        product = new Product(PRODUCT_NAME, PRODUCT_PRICE, PRODUCT_DESCRIPTION, PRODUCT_LAST_UPDATE, PRODUCT_CATEGORY_ID);
         products.add(product);
         this.mockMvc = MockMvcBuilders.standaloneSetup(productController).build();
     }
 
     @Test
-    public void itShouldGetAllProductsFromService(){
+    public void itShouldGetAllProductsFromService() {
         when(productService.getProducts()).thenReturn(products);
         Iterable<Product> returnedProducts = productController.getProducts();
         assertEquals(products, returnedProducts);
@@ -76,7 +85,7 @@ public class ProductControllerTest {
     }
 
     @Test
-    public void itShouldDeleteAProductGivenItsId(){
+    public void itShouldDeleteAProductGivenItsId() {
         when(productService.deleteProduct(PRODUCT_ID)).thenReturn(PRODUCT_DELETED_MESSAGE);
         String message = productController.deleteProduct(PRODUCT_ID);
         assertEquals(PRODUCT_DELETED_MESSAGE, message);
@@ -84,7 +93,7 @@ public class ProductControllerTest {
     }
 
     @Test
-    public void itShouldNotDeleteAProductGivenItsId(){
+    public void itShouldNotDeleteAProductGivenItsId() {
         when(productService.deleteProduct(PRODUCT_ID)).thenReturn(INVALID_PRODUCT_MESSAGE);
         String message = productController.deleteProduct(PRODUCT_ID);
         assertEquals(INVALID_PRODUCT_MESSAGE, message);
@@ -92,7 +101,7 @@ public class ProductControllerTest {
     }
 
     @Test
-    public void itShouldUpdateProductWhenGivenItsId(){
+    public void itShouldUpdateProductWhenGivenItsId() {
         when(productService.updateProduct(PRODUCT_ID, product)).thenReturn(product);
         Product updatedProduct = productController.updateProduct(PRODUCT_ID, product);
         assertEquals(product, updatedProduct);

@@ -17,13 +17,13 @@ public class RestErrorHandler {
 
     @ExceptionHandler(ProductNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public void handleProductNotFoundException(ProductNotFoundException ex){
+    public void handleProductNotFoundException(ProductNotFoundException ex) {
         LOGGER.debug("Handling 404 error on a product request");
     }
 
     @ExceptionHandler(CategoryNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public void handleCategoryNotFoundException(CategoryNotFoundException ex){
+    public void handleCategoryNotFoundException(CategoryNotFoundException ex) {
         LOGGER.debug("Handling 404 error on a category request");
     }
 }

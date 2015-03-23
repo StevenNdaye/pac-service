@@ -3,7 +3,6 @@ package com.productcategory.rest.controller;
 import com.productcategory.rest.domain.Category;
 import com.productcategory.rest.exceptions.CategoryNotFoundException;
 import com.productcategory.rest.service.CategoryService;
-import static com.productcategory.rest.helpers.SyntaxSugar.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,6 +15,10 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.productcategory.rest.helpers.SyntaxSugar.CATEGORY_DELETED_MESSAGE;
+import static com.productcategory.rest.helpers.SyntaxSugar.CATEGORY_ID;
+import static com.productcategory.rest.helpers.SyntaxSugar.CATEGORY_NAME;
+import static com.productcategory.rest.helpers.SyntaxSugar.INVALID_CATEGORY_MESSAGE;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -29,14 +32,15 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(MockitoJUnitRunner.class)
 public class CategoryControllerTest {
 
-    @Mock private CategoryService categoryService;
+    @Mock
+    private CategoryService categoryService;
     private CategoryController categoryController;
     private List<Category> categories = new ArrayList<Category>();
     private Category category;
     private MockMvc mockMvc;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         MockitoAnnotations.initMocks(this);
         categoryController = new CategoryController(categoryService);
         category = Category.Factory.createCategory(CATEGORY_ID, CATEGORY_NAME);
@@ -45,7 +49,7 @@ public class CategoryControllerTest {
     }
 
     @Test
-    public void itShouldGetAllCategoriesFromService(){
+    public void itShouldGetAllCategoriesFromService() {
         when(categoryService.getCategories()).thenReturn(categories);
         Iterable<Category> returnedCategories = categoryController.getCategories();
         assertEquals(categories, returnedCategories);
@@ -53,7 +57,7 @@ public class CategoryControllerTest {
     }
 
     @Test
-    public void itShouldGetACategoryFromService(){
+    public void itShouldGetACategoryFromService() {
         when(categoryService.getCategory(CATEGORY_ID)).thenReturn(category);
         Category returnedCategory = categoryController.getCategory(CATEGORY_ID);
         assertEquals(category, returnedCategory);
@@ -68,7 +72,7 @@ public class CategoryControllerTest {
     }
 
     @Test
-    public void itShouldSaveCategory(){
+    public void itShouldSaveCategory() {
         when(categoryService.saveCategory(category)).thenReturn(category);
         Category returnedCategory = categoryController.saveCategory(category);
         assertEquals(category, returnedCategory);
@@ -76,7 +80,7 @@ public class CategoryControllerTest {
     }
 
     @Test
-    public void itShouldDeleteAProductGivenItsId(){
+    public void itShouldDeleteAProductGivenItsId() {
         when(categoryService.deleteCategory(CATEGORY_ID)).thenReturn(CATEGORY_DELETED_MESSAGE);
         String message = categoryController.deleteCategory(CATEGORY_ID);
         assertEquals(CATEGORY_DELETED_MESSAGE, message);
@@ -84,7 +88,7 @@ public class CategoryControllerTest {
     }
 
     @Test
-    public void itShouldNotDeleteAProductGivenItsId(){
+    public void itShouldNotDeleteAProductGivenItsId() {
         when(categoryService.deleteCategory(CATEGORY_ID)).thenReturn(INVALID_CATEGORY_MESSAGE);
         String message = categoryController.deleteCategory(CATEGORY_ID);
         assertEquals(INVALID_CATEGORY_MESSAGE, message);
@@ -92,7 +96,7 @@ public class CategoryControllerTest {
     }
 
     @Test
-    public void itShouldUpdateProductWhenGivenItsId(){
+    public void itShouldUpdateProductWhenGivenItsId() {
         when(categoryService.updateCategory(CATEGORY_ID, category)).thenReturn(category);
         Category updatedCategory = categoryController.updateCategory(CATEGORY_ID, category);
         assertEquals(category, updatedCategory);

@@ -6,8 +6,8 @@ import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
 
-import static java.util.Objects.isNull;
 import static com.productcategory.rest.util.Utils.ifNotNull;
+import static java.util.Objects.isNull;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -34,7 +34,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Product saveProduct(Product product) {
         Product returnedProduct = productRepository.findByName(product.getName());
-        if(isNull(returnedProduct)){
+        if (isNull(returnedProduct)) {
             return productRepository.save(product);
         }
         return returnedProduct;
@@ -42,7 +42,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public String deleteProduct(int productId) {
-        if(productRepository.exists(productId)){
+        if (productRepository.exists(productId)) {
             productRepository.delete(productId);
             return PRODUCT_DELETED_MESSAGE;
         }
@@ -52,7 +52,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Product updateProduct(int productId, Product product) {
         Product existingProduct = productRepository.findOne(productId);
-        if(isNull(existingProduct)){
+        if (isNull(existingProduct)) {
             return saveProduct(product);
         }
         return updateExistingProduct(product, existingProduct);

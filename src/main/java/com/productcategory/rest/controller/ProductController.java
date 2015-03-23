@@ -3,14 +3,15 @@ package com.productcategory.rest.controller;
 import com.productcategory.rest.domain.Product;
 import com.productcategory.rest.exceptions.ProductNotFoundException;
 import com.productcategory.rest.service.ProductService;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
 
-/**
- * Created by steven on 2014/11/02.
- */
 @RestController
 @RequestMapping(value = "/products")
 public class ProductController {
@@ -29,7 +30,7 @@ public class ProductController {
 
     @RequestMapping(value = "/{productId}", method = RequestMethod.GET)
     public Product getProduct(@PathVariable int productId) throws ProductNotFoundException {
-        return this.productService.getProduct(productId);
+        return productService.getProduct(productId);
     }
 
     @RequestMapping(method = RequestMethod.POST)

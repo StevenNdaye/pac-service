@@ -3,7 +3,11 @@ package com.productcategory.rest.controller;
 import com.productcategory.rest.domain.Category;
 import com.productcategory.rest.exceptions.CategoryNotFoundException;
 import com.productcategory.rest.service.CategoryService;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
@@ -28,7 +32,7 @@ public class CategoryController {
     }
 
     @RequestMapping(value = "/{categoryId}", method = RequestMethod.GET)
-    public Category getCategory(@PathVariable int categoryId)throws CategoryNotFoundException{
+    public Category getCategory(@PathVariable int categoryId) throws CategoryNotFoundException {
         return categoryService.getCategory(categoryId);
     }
 

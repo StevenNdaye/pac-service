@@ -1,6 +1,11 @@
 package com.productcategory.rest.domain;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
  * Created by steven on 2014/11/04.
@@ -34,8 +39,8 @@ public class Category {
     }
 
     public static class Factory {
-        public static Category createCategory(int id, String name){
-            return new Category(){{
+        public static Category createCategory(int id, String name) {
+            return new Category() {{
                 setId(id);
                 setName(name);
             }};

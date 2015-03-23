@@ -11,8 +11,10 @@ import org.mockito.runners.MockitoJUnitRunner;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.productcategory.rest.helpers.SyntaxSugar.*;
+import static com.productcategory.rest.helpers.SyntaxSugar.CATEGORY_DELETED_MESSAGE;
 import static com.productcategory.rest.helpers.SyntaxSugar.CATEGORY_ID;
+import static com.productcategory.rest.helpers.SyntaxSugar.CATEGORY_NAME;
+import static com.productcategory.rest.helpers.SyntaxSugar.INVALID_CATEGORY_MESSAGE;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -31,14 +33,14 @@ public class CategoryServiceTest {
     private Category category;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         categoryService = new CategoryServiceImpl(categoryRepository);
         category = Category.Factory.createCategory(CATEGORY_ID, CATEGORY_NAME);
         categories.add(category);
     }
 
     @Test
-    public void itShouldGetAllCategoriesFromRepository(){
+    public void itShouldGetAllCategoriesFromRepository() {
         when(categoryRepository.findAll()).thenReturn(categories);
         Iterable<Category> returnedCategories = categoryService.getCategories();
         assertEquals(categories, returnedCategories);
@@ -46,7 +48,7 @@ public class CategoryServiceTest {
     }
 
     @Test
-    public void itShouldGetACategoryFromRepository(){
+    public void itShouldGetACategoryFromRepository() {
         when(categoryRepository.findOne(CATEGORY_ID)).thenReturn(category);
         Category returnedCategory = categoryService.getCategory(CATEGORY_ID);
         assertEquals(category, returnedCategory);
@@ -54,7 +56,7 @@ public class CategoryServiceTest {
     }
 
     @Test
-    public void itShouldSaveCategoryIfNotExists(){
+    public void itShouldSaveCategoryIfNotExists() {
         when(categoryRepository.findByName(category.getName())).thenReturn(null);
         when(categoryRepository.save(category)).thenReturn(category);
         Category returnedCategory = categoryService.saveCategory(category);
@@ -64,7 +66,7 @@ public class CategoryServiceTest {
     }
 
     @Test
-    public void itShouldNotSaveCategoryWhenItExists(){
+    public void itShouldNotSaveCategoryWhenItExists() {
         when(categoryRepository.findByName(category.getName())).thenReturn(category);
         categoryService.saveCategory(category);
         verify(categoryRepository, times(1)).findByName(category.getName());
@@ -72,7 +74,7 @@ public class CategoryServiceTest {
     }
 
     @Test
-    public void itShouldDeleteAProductWhenGivenItsId(){
+    public void itShouldDeleteAProductWhenGivenItsId() {
         when(categoryRepository.exists(CATEGORY_ID)).thenReturn(true);
         String message = categoryService.deleteCategory(CATEGORY_ID);
         assertEquals(CATEGORY_DELETED_MESSAGE, message);
@@ -80,7 +82,7 @@ public class CategoryServiceTest {
     }
 
     @Test
-    public void itShouldNotDeleteAProductIfNotExisting(){
+    public void itShouldNotDeleteAProductIfNotExisting() {
         when(categoryRepository.exists(CATEGORY_ID)).thenReturn(false);
         String message = categoryService.deleteCategory(CATEGORY_ID);
         assertEquals(INVALID_CATEGORY_MESSAGE, message);
@@ -88,7 +90,7 @@ public class CategoryServiceTest {
     }
 
     @Test
-    public void itShouldUpdateProductWhenGivenItsId(){
+    public void itShouldUpdateProductWhenGivenItsId() {
         when(categoryRepository.findOne(CATEGORY_ID)).thenReturn(category);
         when(categoryRepository.save(category)).thenReturn(category);
         Category updatedCategory = categoryService.updateCategory(CATEGORY_ID, category);

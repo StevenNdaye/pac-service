@@ -1,6 +1,14 @@
 package com.productcategory.rest.domain;
 
-import javax.persistence.*;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
@@ -14,29 +22,45 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
+    @JsonProperty
     private int id;
 
     @Column(name = "name")
+    @JsonProperty
     private String name;
 
     @Column(name = "price")
+    @JsonProperty
     private BigDecimal price;
 
     @Column(name = "description")
+    @JsonProperty
     private String description;
 
     @Column(name = "last_update")
+    @JsonProperty
     private Timestamp date;
 
     @Column(name = "category_id")
+    @JsonProperty
     private int categoryId;
+
+    public Product() {
+    }
+
+    @JsonCreator
+    public Product(@JsonProperty("name") String name, @JsonProperty("price") BigDecimal price,
+                   @JsonProperty("description") String description, @JsonProperty("date") Timestamp date,
+                   @JsonProperty("categoryId") int categoryId) {
+        this.name = name;
+        this.price = price;
+        this.description = description;
+        this.date = date;
+        this.categoryId = categoryId;
+    }
 
     public int getId() {
         return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getName() {
@@ -63,7 +87,7 @@ public class Product {
         this.date = date;
     }
 
-    public int getCategoryId() {
+    public int  getCategoryId() {
         return categoryId;
     }
 
@@ -77,19 +101,5 @@ public class Product {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public static class Factory {
-
-        public static Product createProduct(final int id, final String name, final BigDecimal price, final Timestamp date, final int categoryId, final String description){
-            return new Product(){{
-                setId(id);
-                setName(name);
-                setPrice(price);
-                setDescription(description);
-                setDate(date);
-                setCategoryId(categoryId);
-            }};
-        }
     }
 }

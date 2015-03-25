@@ -43,7 +43,7 @@ public class CategoryControllerTest {
     public void setUp() {
         MockitoAnnotations.initMocks(this);
         categoryController = new CategoryController(categoryService);
-        category = Category.Factory.createCategory(CATEGORY_ID, CATEGORY_NAME);
+        category = new Category(CATEGORY_NAME);
         categories.add(category);
         this.mockMvc = MockMvcBuilders.standaloneSetup(categoryController).build();
     }

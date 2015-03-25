@@ -1,5 +1,8 @@
 package com.productcategory.rest.domain;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,10 +20,17 @@ public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
+    @JsonProperty
     private int id;
 
     @Column(name = "name")
+    @JsonProperty
     private String name;
+
+    @JsonCreator
+    public Category(@JsonProperty("name") String name) {
+        this.name = name;
+    }
 
     public int getId() {
         return id;
@@ -36,14 +46,5 @@ public class Category {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public static class Factory {
-        public static Category createCategory(int id, String name) {
-            return new Category() {{
-                setId(id);
-                setName(name);
-            }};
-        }
     }
 }

@@ -35,7 +35,7 @@ public class CategoryServiceTest {
     @Before
     public void setUp() {
         categoryService = new CategoryServiceImpl(categoryRepository);
-        category = Category.Factory.createCategory(CATEGORY_ID, CATEGORY_NAME);
+        category = new Category(CATEGORY_NAME);
         categories.add(category);
     }
 
@@ -100,8 +100,8 @@ public class CategoryServiceTest {
 
     @Test
     public void itShouldNotUpdateNameWhenGivenNameIsNull() {
-        Category expectedCategory = Category.Factory.createCategory(CATEGORY_ID, "James");
-        Category someCategory = Category.Factory.createCategory(CATEGORY_ID, null);
+        Category expectedCategory = new Category("James");
+        Category someCategory = new Category(null);
 
         when(categoryRepository.findOne(CATEGORY_ID)).thenReturn(expectedCategory);
         when(categoryRepository.save(expectedCategory)).thenReturn(expectedCategory);

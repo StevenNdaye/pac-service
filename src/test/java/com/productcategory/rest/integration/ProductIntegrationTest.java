@@ -35,7 +35,7 @@ public class ProductIntegrationTest extends AbstractIntegrationTest{
         Product product = new Product("productName", BigDecimal.TEN, "productDescription", new Timestamp(new Date().getTime()), 2);
         productRepository.save(product);
 
-        ResponseEntity<Product[]> response = restTemplate.getForEntity(url + "/products", Product[].class);
+        ResponseEntity<Product[]> response = restTemplate.getForEntity(url + "products", Product[].class);
 
         assertThat(response.getStatusCode(), is(HttpStatus.OK));
         Collection<Product> products = asList(response.getBody());
@@ -48,7 +48,7 @@ public class ProductIntegrationTest extends AbstractIntegrationTest{
 
         Product savedProduct = productRepository.save(product);
 
-        ResponseEntity<Product> response = restTemplate.getForEntity(url + "/products/{productId}", Product.class, savedProduct.getId());
+        ResponseEntity<Product> response = restTemplate.getForEntity(url + "products/{productId}", Product.class, savedProduct.getId());
 
         assertThat(response.getStatusCode(), is(HttpStatus.OK));
 
@@ -58,7 +58,7 @@ public class ProductIntegrationTest extends AbstractIntegrationTest{
     @Test
     public void shouldCreateAProduct() throws Exception {
         Product product = new Product("productName", BigDecimal.TEN, "productDescription", new Timestamp(new Date().getTime()), 2);
-        ResponseEntity<Product> createdProduct = restTemplate.postForEntity(url + "/products", product, Product.class);
+        ResponseEntity<Product> createdProduct = restTemplate.postForEntity(url + "products", product, Product.class);
 
         Product retrievedProduct = productRepository.findOne(createdProduct.getBody().getId());
 
@@ -72,7 +72,7 @@ public class ProductIntegrationTest extends AbstractIntegrationTest{
         Product product = new Product("productName", BigDecimal.TEN, "productDescription", new Timestamp(new Date().getTime()), 2);
         Product savedProduct = productRepository.save(product);
         savedProduct.setCategoryId(1);
-        restTemplate.put(url + "/products/{productId}", savedProduct, savedProduct.getId());
+        restTemplate.put(url + "products/{productId}", savedProduct, savedProduct.getId());
 
         assertThat(savedProduct.getCategoryId(), is(1));
     }
@@ -82,7 +82,7 @@ public class ProductIntegrationTest extends AbstractIntegrationTest{
         Product product = new Product("productName", BigDecimal.TEN, "productDescription", new Timestamp(new Date().getTime()), 2);
         Product savedProduct = productRepository.save(product);
 
-        restTemplate.delete(url + "/products/{productId}", savedProduct.getId());
+        restTemplate.delete(url + "products/{productId}", savedProduct.getId());
 
         Product retrievedProduct = productRepository.findOne(savedProduct.getId());
 

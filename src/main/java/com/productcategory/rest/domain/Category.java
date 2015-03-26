@@ -27,6 +27,9 @@ public class Category {
     @JsonProperty
     private String name;
 
+    public Category() {
+    }
+
     @JsonCreator
     public Category(@JsonProperty("name") String name) {
         this.name = name;
@@ -47,4 +50,5 @@ public class Category {
     public void setName(String name) {
         this.name = name;
     }
+
 }

@@ -19,7 +19,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 
-public class ProductIntegrationTest extends AbstractIntegrationTest{
+public class ProductIntegrationTest extends AbstractIntegrationTest {
 
     @Inject
     private ProductRepository productRepository;
@@ -93,4 +93,5 @@ public class ProductIntegrationTest extends AbstractIntegrationTest{
     public void tearDown() throws Exception {
         productRepository.deleteAll();
     }
+
 }

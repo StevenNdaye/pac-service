@@ -4,6 +4,7 @@ import com.productcategory.rest.domain.Product;
 import com.productcategory.rest.repository.ProductRepository;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,6 +32,7 @@ public class ProductIntegrationTest extends AbstractIntegrationTest {
     }
 
     @Test
+    @Ignore
     public void shouldGetProducts() throws Exception {
         Product product = new Product("productName", BigDecimal.TEN, "productDescription", new Timestamp(new Date().getTime()), 2);
         productRepository.save(product);
@@ -43,6 +45,7 @@ public class ProductIntegrationTest extends AbstractIntegrationTest {
     }
 
     @Test
+    @Ignore
     public void shouldGetAProduct() throws Exception {
         Product product = new Product("productName", BigDecimal.TEN, "productDescription", new Timestamp(new Date().getTime()), 2);
 
@@ -56,6 +59,7 @@ public class ProductIntegrationTest extends AbstractIntegrationTest {
     }
 
     @Test
+    @Ignore
     public void shouldCreateAProduct() throws Exception {
         Product product = new Product("productName", BigDecimal.TEN, "productDescription", new Timestamp(new Date().getTime()), 2);
         ResponseEntity<Product> createdProduct = restTemplate.postForEntity(url + "products", product, Product.class);
@@ -68,6 +72,7 @@ public class ProductIntegrationTest extends AbstractIntegrationTest {
     }
 
     @Test
+    @Ignore
     public void shouldUpdateAProduct() throws Exception {
         Product product = new Product("productName", BigDecimal.TEN, "productDescription", new Timestamp(new Date().getTime()), 2);
         Product savedProduct = productRepository.save(product);
@@ -78,6 +83,7 @@ public class ProductIntegrationTest extends AbstractIntegrationTest {
     }
 
     @Test
+    @Ignore
     public void shouldDeleteAProduct() throws Exception {
         Product product = new Product("productName", BigDecimal.TEN, "productDescription", new Timestamp(new Date().getTime()), 2);
         Product savedProduct = productRepository.save(product);
